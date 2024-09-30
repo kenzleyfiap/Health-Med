@@ -64,7 +64,6 @@ class PacienteControllerTest {
         when(pacienteService.save(any(PacienteDTO.class)))
                 .thenReturn(PacienteHelper.gerarPacienteResponseDTO());
 
-
         // Act && Assert
         mockMvc.perform(
                 post("/pacientes")

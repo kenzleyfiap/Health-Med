@@ -100,7 +100,6 @@ class MedicoControllerTest {
 
 
     }
-
     public static String asJsonString(final Object object) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.findAndRegisterModules();

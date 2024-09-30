@@ -36,7 +36,6 @@ class ConsultaControllerTest {
     private ConsultaService consultaService;
 
     AutoCloseable mock;
-
     @BeforeEach
     void setup() {
         mock = MockitoAnnotations.openMocks(this);

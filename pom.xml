@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>br.com</groupId>
 	<artifactId>health</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.2-SNAPSHOT</version>
 	<name>med</name>
 	<description>API REST para agendamentos de consultas para Hackathon FIAP</description>
 	<url/>
@@ -35,7 +35,7 @@
 		<sonar.language>java</sonar.language>
 		<sonar.sources>src/main/java</sonar.sources>
 		<sonar.tests>src/test/java</sonar.tests>
-		<sonar.tests>src/test/java/br/com/health/controller,src/test/java/br/com/health/service</sonar.tests>
+		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -262,10 +262,23 @@
 						</excludes>
 					</configuration>
 				</plugin>
+
 			</plugins>
 		</pluginManagement>
 
 		<plugins>
+
+			<plugin>
+				<groupId>org.sonarsource.scanner.maven</groupId>
+				<artifactId>sonar-maven-plugin</artifactId>
+				<version>4.0.0.4121</version>
+			</plugin>
+
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+
 
 			<plugin>
 				<groupId>org.jacoco</groupId>
@@ -273,14 +286,14 @@
 				<version>${jacoco.version}</version>
 				<executions>
 					<execution>
-						<id>prepare-agent</id>
+						<id>jacoco-initialize</id>
 						<goals>
 							<goal>prepare-agent</goal>
 						</goals>
 					</execution>
 					<execution>
-						<id>report</id>
-						<phase>prepare-package</phase>
+						<id>jacoco-site</id>
+						<phase>package</phase>
 						<goals>
 							<goal>report</goal>
 						</goals>
@@ -292,76 +305,13 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-surefire-plugin</artifactId>
-				<version>3.1.2</version>
 				<configuration>
 					<includes>
 						<include>**/*Test.java</include>
 					</includes>
-					<excludes>
-						<exclude>**/bdd/**</exclude>
-					</excludes>
-					<properties>
-						<junit.jupiter.extensions.autodetection.enabled>true</junit.jupiter.extensions.autodetection.enabled>
-					</properties>
 				</configuration>
 			</plugin>
 
-
 		</plugins>
 	</build>
-
-	<profiles>
-		<profile>
-			<id>integration-test</id>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-surefire-plugin</artifactId>
-						<version>3.1.2</version>
-						<configuration>
-							<includes>
-								<include>**/*IT.java</include>
-							</includes>
-							<excludes>
-								<exclude>**/*Test.java</exclude>
-							</excludes>
-							<properties>
-								<configurationParameters>
-									cucumber.junit-platform.naming-strategy=long
-								</configurationParameters>
-							</properties>
-						</configuration>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-
-		<profile>
-			<id>system-test</id>
-			<build>
-				<pluginManagement>
-					<plugins>
-						<plugin>
-							<groupId>org.apache.maven.plugins</groupId>
-							<artifactId>maven-surefire-plugin</artifactId>
-							<version>3.1.2</version>
-							<configuration>
-								<includes combine.self="override">
-									<include>**/bdd/**</include>
-								</includes>
-								<excludes combine.self="override">
-									<exclude>**/api/**</exclude>
-									<exclude>**/business/**</exclude>
-									<exclude>**/infrastructure/**</exclude>
-								</excludes>
-							</configuration>
-						</plugin>
-					</plugins>
-				</pluginManagement>
-			</build>
-		</profile>
-
-	</profiles>
-
 </project>

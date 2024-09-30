@@ -52,7 +52,7 @@ class ConsultaControllerIT {
     @Test
     void agendar() throws Exception {
 
-        LocalDate data = LocalDate.of(2024, 9, 30);
+        LocalDate data = LocalDate.of(2024, 10, 7);
         LocalTime horario = LocalTime.of(8, 0);
         LocalDateTime dataConsulta = LocalDateTime.of(data, horario);
 

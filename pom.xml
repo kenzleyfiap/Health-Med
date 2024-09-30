@@ -33,15 +33,8 @@
 		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
 		<sonar.coverage.jacoco.xmlReportPaths>target/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
 		<sonar.language>java</sonar.language>
-		<sonar.coverage.exclusions>
-			**/*DTO.java,
-			**/enums/**/*.java
-		</sonar.coverage.exclusions>
-		<sonar.exclusions>
-			**/*DTO.java,
-			**/Mapper*.java,
-			**/enums/**/*.java
-		</sonar.exclusions>
+		<sonar.sources>src/main/java</sonar.sources>
+		<sonar.tests>src/test/java</sonar.tests>
 
 	</properties>
 	<dependencies>
@@ -94,6 +87,24 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<artifactId>assertj-core</artifactId>
+					<groupId>org.assertj</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>junit-jupiter-api</artifactId>
+					<groupId>org.junit.jupiter</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>junit-jupiter-engine</artifactId>
+					<groupId>org.junit.jupiter</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>asm</artifactId>
+					<groupId>org.ow2.asm</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 		<dependency>
@@ -179,6 +190,47 @@
 			</exclusions>
 		</dependency>
 
+		<!-- teste -->
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-api</artifactId>
+			<version>5.9.2</version>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.junit.platform/junit-platform-suite-api -->
+		<dependency>
+			<groupId>org.junit.platform</groupId>
+			<artifactId>junit-platform-suite-api</artifactId>
+			<version>1.9.3</version>
+			<scope>test</scope>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.junit.jupiter</groupId>
+			<artifactId>junit-jupiter-engine</artifactId>
+			<version>5.9.2</version>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<artifactId>junit-jupiter-api</artifactId>
+					<groupId>org.junit.jupiter</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>opentest4j</artifactId>
+					<groupId>org.opentest4j</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>org.assertj</groupId>
+			<artifactId>assertj-core</artifactId>
+			<version>3.21.0</version>
+			<scope>test</scope>
+		</dependency>
+
 
 		<!-- sonar -->
 
@@ -234,6 +286,14 @@
 				<groupId>org.sonarsource.scanner.maven</groupId>
 				<artifactId>sonar-maven-plugin</artifactId>
 				<version>4.0.0.4121</version>
+				<executions>
+					<execution>
+						<phase>verify</phase>
+						<goals>
+							<goal>sonar</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 
 			<plugin>
@@ -313,15 +373,6 @@
 			</build>
 		</profile>
 
-		<profile>
-			<id>dev</id>
-			<properties>
-				<activatedProperties>dev</activatedProperties>
-			</properties>
-			<activation>
-				<activeByDefault>true</activeByDefault>
-			</activation>
-		</profile>
 	</profiles>
 
 </project>

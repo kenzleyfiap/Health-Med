@@ -23,20 +23,32 @@ public class PacienteController {
 
     @PostMapping
     @Transactional
-    @Operation(security = { @SecurityRequirement(name = "bearer-key") })
+    @Operation(
+            summary = "Cadastrar Paciente",
+            description = "Este endpoint permite cadastrar um Paciente. É necessário fornecer um corpo de solicitação com os dados do paciente a ser cadastrado.",
+            security = { @SecurityRequirement(name = "bearer-key")
+            })
     public ResponseEntity<PacienteResponseDTO> cadastrar(@RequestBody @Valid PacienteDTO pacienteDTO) {
         return ResponseEntity.ok(pacienteService.save(pacienteDTO));
     }
 
     @GetMapping
-    @Operation(security = { @SecurityRequirement(name = "bearer-key") })
+    @Operation(
+            summary = "Listar Pacientes",
+            description = "Este endpoint permite listar pacientes cadastrados.",
+            security = { @SecurityRequirement(name = "bearer-key")
+            })
     public ResponseEntity<Page<PacienteResponseDTO>> listar(@PageableDefault(size = 10, sort = {"nome"}) Pageable paginacao) {
         var page = pacienteService.findAllByAtivoTrue(paginacao);
         return ResponseEntity.ok(page);
     }
 
     @GetMapping("/{id}")
-    @Operation(security = { @SecurityRequirement(name = "bearer-key") })
+    @Operation(
+            summary = "Listar Paciente pelo ID",
+            description = "Este endpoint permite Listar um Paciente pelo ID. É necessário fornecer um parâmetro de solicitação com o ID do paciente a ser consultado.",
+            security = { @SecurityRequirement(name = "bearer-key")
+            })
     public ResponseEntity<PacienteResponseDTO> detalhar(@PathVariable Long id) {
         return ResponseEntity.ok(pacienteService.getReferenceById(id));
     }

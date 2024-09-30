@@ -22,11 +22,19 @@ public class MedicoController {
 
     @PostMapping
     @Transactional
+    @Operation(
+            summary = "Cadastrar Médico",
+            description = "Este endpoint permite cadastrar um médico. É necessário fornecer um corpo de solicitação com os dados do médico a ser cadastrado."
+           )
     public ResponseEntity<MedicoResponseDTO> cadastrar(@RequestBody @Valid MedicoDTO medicoDTO) {
         return ResponseEntity.ok(medicoService.save(medicoDTO));
     }
     @GetMapping
-    @Operation(security = { @SecurityRequirement(name = "bearer-key") })
+    @Operation(
+            summary = "Listar Médicos",
+            description = "Este endpoint permite listar médicos cadastrados",
+            security = { @SecurityRequirement(name = "bearer-key")
+            })
     public ResponseEntity<Page<MedicoResponseDTO>> listar(@PageableDefault(size = 10, sort = {"nome"}) Pageable pageable) {
         var page = medicoService.findAllByAtivoTrue(pageable);
         return ResponseEntity.ok(page);

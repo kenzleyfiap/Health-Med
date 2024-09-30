@@ -22,7 +22,11 @@ public class ConsultaController {
     private final ConsultaService service;
     @PostMapping
     @Transactional
-    @Operation(security = { @SecurityRequirement(name = "bearer-key") })
+    @Operation(
+            summary = "Agendar uma Consulta",
+            description = "Este endpoint permite agendar uma consulta. É necessário fornecer um corpo de solicitação com os dados da consulta a ser agendada.",
+            security = { @SecurityRequirement(name = "bearer-key")
+            })
     public ResponseEntity<ConsultaResponseDTO> agendar(@RequestBody @Valid ConsultaDTO dados) {
         var agendar = service.save(dados);
         return ResponseEntity.ok(agendar);

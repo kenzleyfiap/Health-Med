@@ -1,15 +1,21 @@
 package br.com.health.service.impl;
 
-import br.com.health.domain.*;
+import br.com.health.domain.medico.Especialidade;
+import br.com.health.domain.medico.HorarioDisponivel;
+import br.com.health.domain.medico.Medico;
+import br.com.health.domain.usuario.PerfilUsuario;
 import br.com.health.dto.consulta.ConsultaDTO;
 import br.com.health.dto.medico.AtualizacaoMedicoDTO;
 import br.com.health.dto.medico.MedicoDTO;
 import br.com.health.dto.medico.MedicoResponseDTO;
+import br.com.health.dto.usuario.RegistrarDTO;
 import br.com.health.infra.exception.ValidacaoException;
 import br.com.health.mapper.HorarioDisponivelMapper;
 import br.com.health.mapper.MedicoMapper;
 import br.com.health.repository.MedicoRepository;
 import br.com.health.service.MedicoService;
+import br.com.health.service.UsuarioService;
+import br.com.health.validators.medico.ValidadorCadastroMedico;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,21 +35,13 @@ public class MedicoServiceImpl implements MedicoService {
     private final MedicoRepository repository;
     private final MedicoMapper mapper;
     private final HorarioDisponivelMapper horarioDisponivelMapper;
+    private final UsuarioService usuarioService;
+    private final List<ValidadorCadastroMedico> validadorCadastroMedicos;
 
     @Override
     public Page<MedicoResponseDTO> findAllByAtivoTrue(Pageable pageable) {
         Page<Medico> medicos = repository.findAllByAtivoTrue(pageable);
         return medicos.map(mapper::entityToResponseDTO);
-    }
-
-    @Override
-    public MedicoResponseDTO escolherMedicoAleatorioLivreNaData(Especialidade especialidade, LocalDateTime data) {
-        return mapper.entityToResponseDTO(repository.escolherMedicoAleatorioLivreNaData(especialidade, data));
-    }
-
-    @Override
-    public boolean findAtivoById(Long idMedico) {
-        return findAtivoById(idMedico);
     }
 
     @Override
@@ -57,21 +55,14 @@ public class MedicoServiceImpl implements MedicoService {
         return mapper.entityToResponseDTO(repository.findById(idMedico).orElseThrow(() -> new ValidacaoException("médico não encontrado")));
     }
 
-    public MedicoResponseDTO escolherMedico(ConsultaDTO dados) {
-        if(dados.idMedico() != null) {
-            return findById(dados.idMedico());
-        }
-        if(dados.especialidade() == null) {
-            throw new ValidacaoException("Especialidade é obrigatória quando médico não for escolhido!");
-        }
-        return escolherMedicoAleatorioLivreNaData(dados.especialidade(), dados.data());
-    }
-
     @Override
     @Transactional
     public MedicoResponseDTO save(MedicoDTO medicoDTO) {
+        validadorCadastroMedicos.forEach(validador -> validador.validar(medicoDTO));
         Medico medico = mapper.dtoToEntity(medicoDTO);
         medico.getHorariosDisponiveis().forEach(horario -> horario.setMedico(medico));
+        medico.setAtivo(Boolean.TRUE);
+        usuarioService.save(new RegistrarDTO(medico.getEmail(), medicoDTO.password(), PerfilUsuario.MEDICO));
         return mapper.entityToResponseDTO(repository.save(medico));
     }
 
@@ -116,11 +107,6 @@ public class MedicoServiceImpl implements MedicoService {
         return mapper.entityToResponseDTO(repository.save(medico));
     }
 
-    @Override
-    public void delete(Long id) {
-        findById(id);
-        repository.deleteById(id);
-    }
     @Override
     public Medico getMedico(Long id) {
         return repository.findById(id).orElseThrow(() -> new ValidacaoException("Medico não encontrado"));

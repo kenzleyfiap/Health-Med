@@ -1,5 +1,6 @@
-package br.com.health.domain;
+package br.com.health.domain.medico;
 
+import br.com.health.domain.medico.Medico;
 import jakarta.persistence.*;
 import lombok.*;
 

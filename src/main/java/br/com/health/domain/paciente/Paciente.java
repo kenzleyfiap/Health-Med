@@ -1,4 +1,4 @@
-package br.com.health.domain;
+package br.com.health.domain.paciente;
 
 import jakarta.persistence.*;
 import lombok.*;

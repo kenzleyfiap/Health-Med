@@ -1,6 +1,6 @@
 package br.com.health.dto.medico;
 
-import br.com.health.domain.Especialidade;
+import br.com.health.domain.medico.Especialidade;
 import jakarta.validation.constraints.*;
 import org.hibernate.validator.constraints.br.CPF;
 

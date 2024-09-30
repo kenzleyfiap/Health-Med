@@ -1,4 +1,4 @@
-package br.com.health.domain;
+package br.com.health.domain.medico;
 
 import br.com.health.dto.medico.AtualizacaoMedicoDTO;
 import br.com.health.dto.medico.MedicoDTO;

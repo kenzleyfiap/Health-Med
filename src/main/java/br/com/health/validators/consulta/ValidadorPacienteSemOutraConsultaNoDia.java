@@ -1,4 +1,4 @@
-package br.com.health.validators;
+package br.com.health.validators.consulta;
 
 import br.com.health.dto.consulta.ConsultaDTO;
 import br.com.health.infra.exception.ValidacaoException;

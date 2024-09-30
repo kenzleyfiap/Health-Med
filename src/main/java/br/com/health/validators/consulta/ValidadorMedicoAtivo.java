@@ -1,10 +1,9 @@
-package br.com.health.validators;
+package br.com.health.validators.consulta;
 
 import br.com.health.dto.consulta.ConsultaDTO;
 import br.com.health.infra.exception.ValidacaoException;
 import br.com.health.repository.MedicoRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component

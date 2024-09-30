@@ -1,7 +1,7 @@
 package br.com.health.repository;
 
-import br.com.health.domain.Especialidade;
-import br.com.health.domain.Medico;
+import br.com.health.domain.medico.Especialidade;
+import br.com.health.domain.medico.Medico;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -36,4 +36,10 @@ public interface MedicoRepository extends JpaRepository<Medico, Long> {
             m.id = :idMedico
             """)
     Boolean findAtivoById(Long idMedico);
+
+    boolean existsByCrm(String crm);
+
+    boolean existsByCpf(String cpf);
+
+    boolean existsByEmail(String email);
 }

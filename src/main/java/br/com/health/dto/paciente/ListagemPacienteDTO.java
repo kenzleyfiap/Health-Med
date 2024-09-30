@@ -1,6 +1,6 @@
 package br.com.health.dto.paciente;
 
-import br.com.health.domain.Paciente;
+import br.com.health.domain.paciente.Paciente;
 
 public record ListagemPacienteDTO(Long id, String nome, String email, String cpf) {
 

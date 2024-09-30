@@ -1,7 +1,6 @@
 package br.com.health.dto.medico;
 
-import br.com.health.domain.Especialidade;
-import jakarta.validation.constraints.*;
+import br.com.health.domain.medico.Especialidade;
 
 import java.util.List;
 

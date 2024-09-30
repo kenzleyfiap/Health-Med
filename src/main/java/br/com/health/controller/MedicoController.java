@@ -14,7 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/medicos")
+@RequestMapping("medicos")
 @RequiredArgsConstructor
 public class MedicoController {
 
@@ -22,31 +22,13 @@ public class MedicoController {
 
     @PostMapping
     @Transactional
-    @Operation(security = { @SecurityRequirement(name = "bearer-key") })
     public ResponseEntity<MedicoResponseDTO> cadastrar(@RequestBody @Valid MedicoDTO medicoDTO) {
         return ResponseEntity.ok(medicoService.save(medicoDTO));
     }
     @GetMapping
+    @Operation(security = { @SecurityRequirement(name = "bearer-key") })
     public ResponseEntity<Page<MedicoResponseDTO>> listar(@PageableDefault(size = 10, sort = {"nome"}) Pageable pageable) {
         var page = medicoService.findAllByAtivoTrue(pageable);
         return ResponseEntity.ok(page);
-    }
-
-    @PutMapping
-    @Transactional
-    public ResponseEntity atualizar(@RequestBody @Valid AtualizacaoMedicoDTO medicoDTO) {
-        return ResponseEntity.ok(medicoService.updateHorarioDisponiveis(medicoDTO));
-    }
-
-    @DeleteMapping("/{id}")
-    @Transactional
-    public ResponseEntity excluir(@PathVariable Long id) {
-        medicoService.delete(id);
-        return ResponseEntity.noContent().build();
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<MedicoResponseDTO> detalhar(@PathVariable Long id) {
-        return ResponseEntity.ok(medicoService.findById(id));
     }
 }

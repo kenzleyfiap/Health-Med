@@ -1,7 +1,6 @@
 package br.com.health.dto.consulta;
 
-import br.com.health.domain.Especialidade;
-import jakarta.validation.constraints.Future;
+import br.com.health.domain.medico.Especialidade;
 import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotNull;
 

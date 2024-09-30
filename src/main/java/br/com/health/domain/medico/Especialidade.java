@@ -1,4 +1,4 @@
-package br.com.health.domain;
+package br.com.health.domain.medico;
 
 public enum Especialidade {
     ORTOPEDIA,

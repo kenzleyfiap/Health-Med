@@ -1,6 +1,6 @@
 package br.com.health.dto.consulta;
 
-import br.com.health.domain.Consulta;
+import br.com.health.domain.consulta.Consulta;
 
 import java.time.LocalDateTime;
 

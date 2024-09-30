@@ -29,12 +29,14 @@ public class PacienteController {
     }
 
     @GetMapping
+    @Operation(security = { @SecurityRequirement(name = "bearer-key") })
     public ResponseEntity<Page<PacienteResponseDTO>> listar(@PageableDefault(size = 10, sort = {"nome"}) Pageable paginacao) {
         var page = pacienteService.findAllByAtivoTrue(paginacao);
         return ResponseEntity.ok(page);
     }
 
     @GetMapping("/{id}")
+    @Operation(security = { @SecurityRequirement(name = "bearer-key") })
     public ResponseEntity<PacienteResponseDTO> detalhar(@PathVariable Long id) {
         return ResponseEntity.ok(pacienteService.getReferenceById(id));
     }

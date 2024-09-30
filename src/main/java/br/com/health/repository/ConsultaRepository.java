@@ -1,6 +1,6 @@
 package br.com.health.repository;
 
-import br.com.health.domain.Consulta;
+import br.com.health.domain.consulta.Consulta;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

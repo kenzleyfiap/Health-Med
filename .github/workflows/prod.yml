@@ -27,6 +27,7 @@ jobs:
               run: docker login -u ${{secrets.DOCKER_LOGIN}} -p ${{secrets.DOCKER_PASSWORD}}
 
             - name: Build docker image
-              run: docker build -t luankenzley/health_med . --build-arg MAIL_USERNAME=${{ secrets.MAIL_USERNAME }} --build-arg MAIL_PASSWORD=${{ secrets.DMAIL_PASSWORD }}
+              run: docker buildx build --build-arg MAIL_USERNAME=*** --build-arg MAIL_PASSWORD=*** -t ***/health_med .
+
             - name: Push image docker
               run: docker push luankenzley/health_med

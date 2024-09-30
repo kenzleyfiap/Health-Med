@@ -35,7 +35,7 @@
 		<sonar.language>java</sonar.language>
 		<sonar.sources>src/main/java</sonar.sources>
 		<sonar.tests>src/test/java</sonar.tests>
-
+		<sonar.tests>test/java/br.com.health/controller,test/java/br.com.health/service</sonar.tests>
 	</properties>
 	<dependencies>
 		<dependency>

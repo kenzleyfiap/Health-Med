@@ -39,4 +39,15 @@ public class MedicoController {
         var page = medicoService.findAllByAtivoTrue(pageable);
         return ResponseEntity.ok(page);
     }
+
+    @PutMapping
+    @Transactional
+    @Operation(
+            summary = "Editar horários disponíveis de Médicos",
+            description = "Este endpoint permite adicionar/remover ou alterar horários disponíveis de médicos cadastrados",
+            security = { @SecurityRequirement(name = "bearer-key")
+            })
+    public ResponseEntity atualizar(@RequestBody @Valid AtualizacaoMedicoDTO medicoDTO) {
+        return ResponseEntity.ok(medicoService.updateHorarioDisponiveis(medicoDTO));
+    }
 }

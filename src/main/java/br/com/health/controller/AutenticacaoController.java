@@ -25,7 +25,6 @@ public class AutenticacaoController {
 
     private final AuthenticationManager authenticationManager;
     private final TokenService tokenService;
-    private final UsuarioService usuarioService;
 
     @PostMapping("/login")
     @Operation(
